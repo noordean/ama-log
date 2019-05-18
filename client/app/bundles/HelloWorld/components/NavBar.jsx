@@ -7,9 +7,9 @@ export default class NavBar extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="navbar">
         <div>AMA Logistics</div>
-        <div>search</div>
+        <div><i className="fa fa-search"></i></div>
       </div>
     );
   }
