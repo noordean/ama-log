@@ -1,3 +1,23 @@
 // Place all the styles related to the Home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.carousel-caption {
+  top: 30%;
+  right: 55%;
+  bottom: auto;
+}
+
+.carousel-inner {
+  height: 700px;
+}
+
+.home {
+  .ama-logo {
+    margin-left: 10%;
+    font-size: 20px;
+  }
+
+  .search-icon {
+    margin-right: 10%;
+  }
+}
