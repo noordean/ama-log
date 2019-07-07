@@ -1,5 +1,4 @@
 import React from "react";
-// import greyChair from "../../../images/grey_chair.jpeg";
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -8,13 +7,8 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      <div className="bd-example" style={{marginTop: "-100px"}}>
+      <div className="main-slider" style={{marginTop: "-100px"}}>
         <div id="carouselExampleCaptions" className="carousel slide" data-ride="carousel">
-          <ol className="carousel-indicators">
-            <li data-target="#carouselExampleCaptions" data-slide-to="0" className="active"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
-            <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
-          </ol>
           <div className="carousel-inner">
             <div className="carousel-item active">
               <img src="http://cdn.shopify.com/s/files/1/0017/9496/5570/products/jpg_bb8744db-0c6b-4fd2-b3c2-c7e992458de3_1200x1200.jpg?v=1533674991" className="d-block w-100" alt="..." />
