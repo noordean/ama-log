@@ -1,4 +1,5 @@
 import React from "react";
+// import greyChair from "../../../images/grey_chair.jpeg";
 
 export default class Main extends React.Component {
   constructor(props) {
@@ -16,21 +17,21 @@ export default class Main extends React.Component {
           </ol>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              <img src="https://cdn.pixabay.com/photo/2018/10/30/16/06/water-lily-3784022__340.jpg" className="d-block w-100" alt="..." />
+              <img src="http://cdn.shopify.com/s/files/1/0017/9496/5570/products/jpg_bb8744db-0c6b-4fd2-b3c2-c7e992458de3_1200x1200.jpg?v=1533674991" className="d-block w-100" alt="..." />
               <div className="carousel-caption d-none d-md-block">
                 <h1>Quality</h1>
                 <p>You get Quality for all you purchase from  us.</p>
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://t1.uc.ltmcdn.com/en/images/5/4/8/what_is_the_main_function_of_flowers_9845_600.jpg" className="d-block w-100" alt="..." />
+              <img src="http://amazingfurniturehouston.com/wp-content/uploads/2017/10/paradise-black_orig.png" className="d-block w-100" alt="..." />
               <div className="carousel-caption d-none d-md-block">
                 <h1>Reliable</h1>
                 <p>Enjoy double reliability - Product and Delivery.</p>
               </div>
             </div>
             <div className="carousel-item">
-              <img src="https://images.unsplash.com/photo-1500382017468-9049fed747ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80" className="d-block w-100" alt="..." />
+              <img src="http://www.stmarysmunicipalairport.com/b/2017/01/dark-brown-bookcase-room-dividers-for-modern-home-furniture-ideas-ikea-bookcase-room-divider-thin-room-divider-shelf-wall-divider-book-shelf-divider-open-bookshelves-room-dividers-bookcase-as-room-div.jpg" className="d-block w-100" alt="..." />
               <div className="carousel-caption d-none d-md-block">
                 <h1>Organized</h1>
                 <p>We load and offload your items in a well organized manner.</p>
