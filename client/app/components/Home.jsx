@@ -1,9 +1,9 @@
 import React from "react";
 
-import NavBar from "./NavBar";
+import Header from "./Header";
 import Main from "./Main";
-import CategorySlider from "./CategorySlider";
-import { relative } from "path";
+import Footer from "./Footer";
+import Navbar from "./Navbar";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -12,10 +12,11 @@ export default class Home extends React.Component {
 
   render() {
     return (
-      <div className="home" style={{position: "relative"}}>
-        <NavBar />
+      <div className="home-page ui container">
+        <Header />
+        <Navbar />
         <Main />
-        <CategorySlider />
+        <Footer />
       </div>
     );
   }
