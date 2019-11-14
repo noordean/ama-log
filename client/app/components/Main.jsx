@@ -7,8 +7,8 @@ export default class Main extends React.Component {
 
   render() {
     return (
-      <div className="products-pricelist">
-        <table className="ui celled table">
+      <div className="products-pricelist ui link cards">
+        {/* <table className="ui celled table">
           <thead>
             <tr>
               <th colSpan="6">Mouka Pricelist</th>
@@ -72,7 +72,139 @@ export default class Main extends React.Component {
               <td data-label="Job">Engineer</td>
             </tr>
           </tbody>
-        </table>
+        </table> */}
+        <div className="card">
+          <div className="image">
+            <img
+              src="https://mattress.ng/image/cache/catalog/unifoam-300x300.jpg"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="image">
+            <img
+              src="http://cdn.shopify.com/s/files/1/0017/9496/5570/products/jpg_bb8744db-0c6b-4fd2-b3c2-c7e992458de3_1200x1200.jpg?v=1533674991"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="image">
+            <img
+              src="http://cdn.shopify.com/s/files/1/0017/9496/5570/products/jpg_bb8744db-0c6b-4fd2-b3c2-c7e992458de3_1200x1200.jpg?v=1533674991"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="image">
+            <img
+              src="http://cdn.shopify.com/s/files/1/0017/9496/5570/products/jpg_bb8744db-0c6b-4fd2-b3c2-c7e992458de3_1200x1200.jpg?v=1533674991"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="image">
+            <img
+              src="https://mattress.ng/image/cache/catalog/unifoam-300x300.jpg"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="image">
+            <img
+              src="https://mattress.ng/image/cache/catalog/product/thumbnail%20(2)-300x300.png"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
+
+        <div className="card">
+          <div className="image">
+            <img
+              src="https://mattress.ng/image/cache/catalog/product/presitge-300x300.jpg"
+              className="product-img"
+            />
+          </div>
+          <div className="content">
+            <a className="header">Mouka Flora</a>
+            <div className="meta">
+              <span className="date">6x3.5x8</span>
+            </div>
+            <div className="description">Nice mouka foam</div>
+          </div>
+          <div className="extra content">
+            <a>#20000.00</a>
+          </div>
+        </div>
       </div>
     );
   }

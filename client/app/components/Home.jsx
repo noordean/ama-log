@@ -4,6 +4,7 @@ import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
+import CenterImage from "./CenterImage";
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -13,8 +14,8 @@ export default class Home extends React.Component {
   render() {
     return (
       <div className="home-page ui container">
-        <Header />
         <Navbar />
+        <CenterImage />
         <Main />
         <Footer />
       </div>
