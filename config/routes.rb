@@ -3,5 +3,9 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
   root 'home#index'
-  resources :session, only: %i[ index ]
+  resources :sessions, only: %i[ create ]
+  resources :admin, only: %i[ index ]
+
+  get 'login', to: 'sessions#new', as: 'login'
+  get 'logout', to: 'sessions#destroy', as: 'logout'
 end

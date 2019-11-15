@@ -9,13 +9,13 @@ export default class Footer extends React.Component {
     return (
       <div className="footer ui grid">
         <div className="eight wide column">
-          <div>
+          <div className="contact-info">
             <b>Address:</b> 22 Itire Lagos
           </div>
-          <div>
+          <div className="contact-info">
             <b>Email:</b> Emailama-mart@gmail.com
           </div>
-          <div>
+          <div className="contact-info">
             <b>Phone:</b> +2347031863004
           </div>
         </div>
@@ -30,7 +30,7 @@ export default class Footer extends React.Component {
             </a>{" "}
           </div>
           <div>
-            <a href="/session">Admin?</a>
+            <a href="/login">Admin?</a>
           </div>
         </div>
       </div>

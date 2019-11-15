@@ -1,4 +1,9 @@
 .login-form {
   width: 35%;
   margin: 7em auto;
+
+  .login-error-msg {
+    color: red;
+    text-align: center;
+  }
 }
