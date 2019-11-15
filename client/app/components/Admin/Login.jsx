@@ -7,7 +7,7 @@ export default class Login extends React.Component {
       username: "",
       password: "",
       errorMessage: ""
-    }
+    };
 
     this.login = this.login.bind(this);
   }
@@ -40,23 +40,37 @@ export default class Login extends React.Component {
     window.location = "/admin";
   }
 
-  setLoginInput = (event) => {
+  setLoginInput = event => {
     this.state[event.target.name] = event.target.value;
-  }
+  };
 
   render() {
-
     return (
       <div className="login-form">
-        <div className="login-error-msg"> {this.state.errorMessage.length > 0 && this.state.errorMessage} </div>
+        <div className="login-error-msg">
+          {" "}
+          {this.state.errorMessage.length > 0 && this.state.errorMessage}{" "}
+        </div>
         <form className="ui form">
           <div className="field">
             <label>Username</label>
-            <input type="text" name="username" placeholder="Username" onChange={this.setLoginInput} />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              onChange={this.setLoginInput}
+              required
+            />
           </div>
           <div className="field">
             <label>Password</label>
-            <input type="text" name="password" placeholder="Password" onChange={this.setLoginInput} />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={this.setLoginInput}
+              required
+            />
           </div>
           <button className="ui button" type="submit" onClick={this.login}>
             Submit
