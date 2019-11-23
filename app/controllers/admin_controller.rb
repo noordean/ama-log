@@ -2,6 +2,7 @@ class AdminController < ApplicationController
   before_action :require_access!
 
   def index
+    @product_categories = ProductCategory.select(:id, :name)
   end
 
   private

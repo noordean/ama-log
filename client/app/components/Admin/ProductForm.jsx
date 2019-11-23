@@ -6,16 +6,38 @@ export default class AddProductForm extends React.Component {
     super(props);
   }
 
-  handleOnChange = () => {
-    console.log("huuuu");
+  handleCategoryOnChange = value => {
+    // fakeId handles when the input is cleared
+    this.loadCategoryProducts(value || "fakeId");
+  };
+
+  loadCategoryProducts = async selectedCategory => {
+    const response = await fetch(`/category/${selectedCategory}/products`, {
+      credentials: "same-origin",
+      method: "GET",
+      headers: ReactOnRails.authenticityHeaders({
+        "Content-Type": "application/json"
+      })
+    });
+
+    const responseObj = await response.json();
+    this.updateProductOptions(responseObj.products);
+  };
+
+  updateProductOptions = products => {
+    const productOptions = products.map(product => {
+      return { value: product.id, text: product.name };
+    });
+    this.productSelect.selectInput.selectize.clearOptions();
+    this.productSelect.selectInput.selectize.addOption(productOptions);
   };
 
   render() {
-    const options = [
-      { value: "R", text: "Red" },
-      { value: "G", text: "Green" },
-      { value: "B", text: "Blue" }
-    ];
+    const { categories } = this.props;
+
+    const categoryOptions = categories.map(category => {
+      return { value: category.id, text: category.name };
+    });
 
     return (
       <form className="ui form product-form">
@@ -26,14 +48,16 @@ export default class AddProductForm extends React.Component {
             <div className="eight wide field">
               <label>Product Category</label>
               <Select
-                options={options}
+                options={categoryOptions}
                 placeholder={"Select a category or add a new one"}
+                onChange={this.handleCategoryOnChange}
               />
             </div>
             <div className="eight wide field">
               <label>Product Name</label>
               <Select
-                options={options}
+                ref={productSelect => (this.productSelect = productSelect)}
+                options={[]}
                 placeholder={"Select a name or add a new one"}
               />
             </div>
