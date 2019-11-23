@@ -6,9 +6,6 @@ class AdminController < ApplicationController
   end
 
   def add_product
-    puts "-------here---------"
-    puts params
-    puts "-------here---------"
     product_category = ProductCategory.find_by(id: params[:categoryName]) || ProductCategory.new(name: params[:categoryName])
     product = Product.find_by(id: params[:productName]) || Product.new(name: params[:productName])
     product_variant = ProductVariant.new(name: params[:variantName], value: params[:variantValue], price: params[:price])
@@ -16,6 +13,9 @@ class AdminController < ApplicationController
     product_category.products << product
     product_variant.image.attach(params[:image])
     product_category.save
+    head :ok
+  rescue
+    head :unprocessable_entity
   end
 
   private

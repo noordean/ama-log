@@ -11,7 +11,8 @@ export default class AddProductForm extends React.Component {
       variantValue: "",
       price: "",
       image: null,
-      responseMessage: ""
+      responseMessage: "",
+      responseStatus: ""
     };
   }
 
@@ -71,12 +72,17 @@ export default class AddProductForm extends React.Component {
     });
 
     if (!response.ok) {
-      const responseObj = await response.json();
-      this.setState({ responseMessage: responseObj.message });
+      this.setState({
+        responseMessage: "Sorry, an error occurred!",
+        responseStatus: "failure"
+      });
       return;
     }
 
-    this.setState({ responseMessage: "Product added successfully" });
+    this.setState({
+      responseMessage: "Product added successfully",
+      responseStatus: "success"
+    });
   };
 
   render() {
@@ -88,7 +94,9 @@ export default class AddProductForm extends React.Component {
 
     return (
       <form className="ui form product-form">
-        <div className="add-product-res-msg">
+        <div
+          className={`add-product-res-msg ${this.state.responseStatus}-response`}
+        >
           {" "}
           {this.state.responseMessage.length > 0 &&
             this.state.responseMessage}{" "}
