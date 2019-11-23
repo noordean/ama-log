@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   get 'logout', to: 'sessions#destroy'
   get 'category/:id/products', to: 'product_categories#products'
   post 'add_product', to: 'admin#add_product'
+  get 'product/:id/product_variants', to: 'products#product_variants'
 end
