@@ -4,11 +4,25 @@ import Select from "../Reusable/Select";
 export default class AddProductForm extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      categoryName: "",
+      productName: "",
+      variantName: "",
+      variantValue: "",
+      price: "",
+      image: null,
+      responseMessage: ""
+    };
   }
 
   handleCategoryOnChange = value => {
     // fakeId handles when the input is cleared
     this.loadCategoryProducts(value || "fakeId");
+    this.setState({ categoryName: value });
+  };
+
+  handleProductOnChange = value => {
+    this.setState({ productName: value });
   };
 
   loadCategoryProducts = async selectedCategory => {
@@ -32,6 +46,39 @@ export default class AddProductForm extends React.Component {
     this.productSelect.selectInput.selectize.addOption(productOptions);
   };
 
+  setFormInputs = event => {
+    const elementName = event.target.name;
+    if (elementName === "image") {
+      this.state[elementName] = event.target.files[0];
+    } else {
+      this.state[elementName] = event.target.value;
+    }
+  };
+
+  submitForm = async () => {
+    let fileData = new FormData();
+    Object.keys(this.state).forEach(data => {
+      fileData.append(data, this.state[data]);
+    });
+    const response = await fetch("/add_product", {
+      credentials: "same-origin",
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "X-CSRF-Token": ReactOnRails.authenticityToken()
+      },
+      body: fileData
+    });
+
+    if (!response.ok) {
+      const responseObj = await response.json();
+      this.setState({ responseMessage: responseObj.message });
+      return;
+    }
+
+    this.setState({ responseMessage: "Product added successfully" });
+  };
+
   render() {
     const { categories } = this.props;
 
@@ -41,6 +88,11 @@ export default class AddProductForm extends React.Component {
 
     return (
       <form className="ui form product-form">
+        <div className="add-product-res-msg">
+          {" "}
+          {this.state.responseMessage.length > 0 &&
+            this.state.responseMessage}{" "}
+        </div>
         <h4 className="ui dividing header product-info">Product Information</h4>
 
         <div className="field">
@@ -59,6 +111,7 @@ export default class AddProductForm extends React.Component {
                 ref={productSelect => (this.productSelect = productSelect)}
                 options={[]}
                 placeholder={"Select a name or add a new one"}
+                onChange={this.handleProductOnChange}
               />
             </div>
           </div>
@@ -70,16 +123,18 @@ export default class AddProductForm extends React.Component {
               <label>Variant Name</label>
               <input
                 type="text"
-                name="shipping[address]"
+                name="variantName"
                 placeholder="E.g Mouka Flora"
+                onChange={this.setFormInputs}
               />
             </div>
             <div className="eight wide field">
               <label>Variant Value</label>
               <input
                 type="text"
-                name="shipping[address]"
+                name="variantValue"
                 placeholder="E.g 6x3.5x8"
+                onChange={this.setFormInputs}
               />
             </div>
           </div>
@@ -91,8 +146,9 @@ export default class AddProductForm extends React.Component {
               <label>Price</label>
               <input
                 type="number"
-                name="shipping[address]"
+                name="price"
                 placeholder="Enter price"
+                onChange={this.setFormInputs}
               />
             </div>
             <div className="eight wide field">
@@ -100,8 +156,9 @@ export default class AddProductForm extends React.Component {
               <input
                 className="product-img-input"
                 type="file"
-                name="shipping[address]"
+                name="image"
                 placeholder="Select an image"
+                onChange={this.setFormInputs}
               />
             </div>
           </div>
@@ -110,7 +167,9 @@ export default class AddProductForm extends React.Component {
         <div className="field">
           <div className="fields">
             <div className="eight wide field">
-              <div className="ui button">Submit</div>
+              <div className="ui button" onClick={this.submitForm}>
+                Submit
+              </div>
             </div>
             <div className="eight wide field logout-link">
               <a href="/logout">Log Out</a>
