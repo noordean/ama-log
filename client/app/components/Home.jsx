@@ -1,6 +1,5 @@
 import React from "react";
 
-import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
@@ -12,9 +11,10 @@ export default class Home extends React.Component {
   }
 
   render() {
+    const { categories } = this.props;
     return (
       <div className="home-page ui container">
-        <Navbar />
+        <Navbar productCategories={categories} />
         <CenterImage />
         <Main />
         <Footer />

@@ -6,6 +6,8 @@ export default class Navbar extends React.Component {
   }
 
   render() {
+    const { productCategories } = this.props;
+
     return (
       <div className="navbar">
         <div className="ui grid">
@@ -18,48 +20,18 @@ export default class Navbar extends React.Component {
             </div>
             <div className="ui flowing basic admission popup">
               <div className="ui three column relaxed divided grid">
-                <div className="column">
-                  <h4 className="ui header">Mattress Brand</h4>
-                  <div className="ui link list">
-                    <a className="item">Design &amp; Urban Ecologies</a>
-                    <a className="item">Fashion Design</a>
-                    <a className="item">Fine Art</a>
-                    <a className="item">Strategic Design</a>
+                {productCategories.map(prodCat => (
+                  <div className="column" key={prodCat.category.id}>
+                    <h4 className="ui header">{prodCat.category.name}</h4>
+                    <div className="ui link list">
+                      {prodCat.products.map(prod => (
+                        <a className="item" key={prod.id}>
+                          {prod.name}
+                        </a>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="column">
-                  <h4 className="ui header">Pillow Brands</h4>
-                  <div className="ui link list">
-                    <a className="item">Anthropology</a>
-                    <a className="item">Economics</a>
-                    <a className="item">Media Studies</a>
-                    <a className="item">Philosophy</a>
-                  </div>
-                </div>
-                <div className="column">
-                  <h4 className="ui header">Matress Prhggdj</h4>
-                  <div className="ui link list">
-                    <a className="item">Food Studies</a>
-                    <a className="item">Journalism</a>
-                    <a className="item">Non Profit Management</a>
-                  </div>
-                </div>
-                <div className="column">
-                  <h4 className="ui header">Bedsheets</h4>
-                  <div className="ui link list">
-                    <a className="item">Food Studies</a>
-                    <a className="item">Journalism</a>
-                    <a className="item">Non Profit Management</a>
-                  </div>
-                </div>
-                <div className="column">
-                  <h4 className="ui header">Duvet</h4>
-                  <div className="ui link list">
-                    <a className="item">Food Studies</a>
-                    <a className="item">Journalism</a>
-                    <a className="item">Non Profit Management</a>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
