@@ -82,8 +82,18 @@ export default class AddProductForm extends React.Component {
             </div>
           </div>
         </div>
-        <div className="ui button" tabIndex="0">
-          Submit Order
+
+        <div className="field">
+          <div className="fields">
+            <div className="eight wide field">
+              <div className="ui button">
+                Submit
+              </div>
+            </div>
+            <div className="eight wide field logout-link">
+              <a href="/logout">Log Out</a>
+            </div>
+          </div>
         </div>
       </form>
     );
