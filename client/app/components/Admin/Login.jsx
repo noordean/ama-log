@@ -8,11 +8,9 @@ export default class Login extends React.Component {
       password: "",
       errorMessage: ""
     };
-
-    this.login = this.login.bind(this);
   }
 
-  async login(event) {
+  login = async (event) => {
     event.preventDefault();
     const username = this.state.username;
     const password = this.state.password;
@@ -72,9 +70,23 @@ export default class Login extends React.Component {
               required
             />
           </div>
-          <button className="ui button" type="submit" onClick={this.login}>
-            Submit
-          </button>
+
+          <div className="field">
+            <div className="fields">
+              <div className="eight wide field">
+                <button
+                  className="ui button"
+                  type="submit"
+                  onClick={this.login}
+                >
+                  Submit
+                </button>
+              </div>
+              <div className="eight wide field go-back-link">
+                <a href="/">Go Back</a>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     );

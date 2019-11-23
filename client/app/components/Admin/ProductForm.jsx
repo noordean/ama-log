@@ -86,9 +86,7 @@ export default class AddProductForm extends React.Component {
         <div className="field">
           <div className="fields">
             <div className="eight wide field">
-              <div className="ui button">
-                Submit
-              </div>
+              <div className="ui button">Submit</div>
             </div>
             <div className="eight wide field logout-link">
               <a href="/logout">Log Out</a>
