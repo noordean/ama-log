@@ -22,7 +22,6 @@ export default class Main extends React.Component {
                   <div className="meta">
                     <span className="date">{product.value}</span>
                   </div>
-                  <div className="description">Some description here</div>
                 </div>
                 <div className="extra content">
                   <a>{`#${product.price}`}</a>
@@ -31,7 +30,7 @@ export default class Main extends React.Component {
             ))}
           </div>
         ) : (
-          <h3 className="no-products-text">No products for these category</h3>
+          <h3 className="no-products-text">No products to display</h3>
         )}
       </div>
     );

@@ -10,7 +10,7 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       products: [],
-      selectedItem: null
+      selectedItem: this.props.categories[0].products[0].id
     };
   }
 
