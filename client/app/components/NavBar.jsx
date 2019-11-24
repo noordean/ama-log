@@ -43,7 +43,7 @@ export default class Navbar extends React.Component {
             </div>
           </div>
           <div className="two wide column right aligned">
-            <a href="#">Fill our service form</a>
+            <a href="https://docs.google.com/forms/d/1yn0sA5FLCcy-IrYq9OkqOYMGtPH0UCKV0P3ZU5L2R2U" target="_blank">Fill our service form</a>
           </div>
         </div>
       </div>

@@ -22,10 +22,10 @@ export default class Footer extends React.Component {
         <div className="eight wide column right aligned">
           <div>
             <b>Follow us:</b>{" "}
-            <a href="#">
+            <a href="https://twitter.com/AMAfurniturmart" target="_blank">
               <i className="twitter icon"></i>
             </a>{" "}
-            <a href="#">
+            <a href="https://www.instagram.com/amafurnituremart/" target="_blank">
               <i className="instagram icon"></i>
             </a>{" "}
           </div>
