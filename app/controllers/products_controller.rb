@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def product_variants
-    product_variants = Product.find(5).product_variants.map do |variant|
+    product_variants = Product.find(params[:id]).product_variants.map do |variant|
       {
         id: variant&.id,
         name: variant&.name,

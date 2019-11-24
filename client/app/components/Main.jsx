@@ -9,24 +9,30 @@ export default class Main extends React.Component {
     const { products } = this.props;
 
     return (
-      <div className="products-pricelist ui link cards">
-        {products.map(product => (
-          <div className="card" key={product.id}>
-            <div className="image">
-              <img src={product.imageUrl} className="product-img" />
-            </div>
-            <div className="content">
-              <a className="header">{product.name}</a>
-              <div className="meta">
-                <span className="date">{product.value}</span>
+      <div ref={productsList => (this.productsList = productsList)}>
+        {products.length ? (
+          <div className="products-pricelist ui link cards">
+            {products.map(product => (
+              <div className="card" key={product.id}>
+                <div className="image">
+                  <img src={product.imageUrl} className="product-img" />
+                </div>
+                <div className="content">
+                  <a className="header">{product.name}</a>
+                  <div className="meta">
+                    <span className="date">{product.value}</span>
+                  </div>
+                  <div className="description">Some description here</div>
+                </div>
+                <div className="extra content">
+                  <a>{`#${product.price}`}</a>
+                </div>
               </div>
-              <div className="description">Some description here</div>
-            </div>
-            <div className="extra content">
-              <a>{`#${product.price}`}</a>
-            </div>
+            ))}
           </div>
-        ))}
+        ) : (
+          <h3 className="no-products-text">No products for these category</h3>
+        )}
       </div>
     );
   }

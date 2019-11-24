@@ -9,16 +9,19 @@ export default class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      products: []
+      products: [],
+      selectedItem: null
     };
   }
 
   componentDidMount() {
-    this.fetchProducts();
+    if (this.props.categories.length) {
+      this.fetchProducts(this.props.categories[0].products[0].id);
+    }
   }
 
-  fetchProducts = async () => {
-    const response = await fetch(`/product/fakeId/product_variants`, {
+  fetchProducts = async productId => {
+    const response = await fetch(`/product/${productId}/product_variants`, {
       credentials: "same-origin",
       method: "GET",
       headers: ReactOnRails.authenticityHeaders({
@@ -30,14 +33,28 @@ export default class Home extends React.Component {
     this.setState({ products: responseObj.products });
   };
 
+  onProductClick = productId => {
+    this.fetchProducts(productId);
+    this.setState({ selectedItem: productId });
+    $("a.browse.item").popup("hide");
+    window.scrollTo(0, this.mainSection.productsList.offsetTop);
+  };
+
   render() {
     const { categories } = this.props;
 
     return (
       <div className="home-page ui container">
-        <Navbar productCategories={categories} />
+        <Navbar
+          productCategories={categories}
+          onProductClick={this.onProductClick}
+          selectedId={this.state.selectedItem}
+        />
         <CenterImage />
-        <Main products={this.state.products} />
+        <Main
+          products={this.state.products}
+          ref={mainSection => (this.mainSection = mainSection)}
+        />
         <Footer />
       </div>
     );

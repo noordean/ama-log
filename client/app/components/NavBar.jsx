@@ -6,7 +6,7 @@ export default class Navbar extends React.Component {
   }
 
   render() {
-    const { productCategories } = this.props;
+    const { productCategories, onProductClick, selectedId } = this.props;
 
     return (
       <div className="navbar">
@@ -25,7 +25,14 @@ export default class Navbar extends React.Component {
                     <h4 className="ui header">{prodCat.category.name}</h4>
                     <div className="ui link list">
                       {prodCat.products.map(prod => (
-                        <a className="item" key={prod.id}>
+                        <a
+                          className="item"
+                          key={prod.id}
+                          onClick={() => onProductClick(prod.id)}
+                          style={{
+                            color: prod.id === selectedId ? "#4183c4" : ""
+                          }}
+                        >
                           {prod.name}
                         </a>
                       ))}
