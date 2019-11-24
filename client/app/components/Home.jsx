@@ -10,7 +10,8 @@ export default class Home extends React.Component {
     super(props);
     this.state = {
       products: [],
-      selectedItem: this.props.categories[0].products[0].id
+      selectedItem:
+        this.props.categories[0] && this.props.categories[0].products[0].id
     };
   }
 

@@ -14,7 +14,10 @@ class AdminController < ApplicationController
     product_category.products << product
     product_category.save
     head :ok
-  rescue
+  rescue => e
+    logger.info "----------Some error here----------"
+    logger.info e
+    logger.info "----------Some error here----------"
     head :unprocessable_entity
   end
 
