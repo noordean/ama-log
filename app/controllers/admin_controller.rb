@@ -12,13 +12,12 @@ class AdminController < ApplicationController
     product_variant.uploaded_image = params[:image]
     product.product_variants << product_variant
     product_category.products << product
-    product_category.save
-    head :ok
-  rescue => e
-    logger.info "----------Some error here----------"
-    logger.info e
-    logger.info "----------Some error here----------"
-    head :unprocessable_entity
+
+    if product_category.save
+      head :ok
+    else
+      head :unprocessable_entity
+    end
   end
 
   private

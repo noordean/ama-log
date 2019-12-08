@@ -12,7 +12,8 @@ export default class AddProductForm extends React.Component {
       price: "",
       image: null,
       responseMessage: "",
-      responseStatus: ""
+      responseStatus: "",
+      uploadingProduct: false
     };
   }
 
@@ -61,6 +62,9 @@ export default class AddProductForm extends React.Component {
     Object.keys(this.state).forEach(data => {
       fileData.append(data, this.state[data]);
     });
+    this.setState({
+      uploadingProduct: true
+    });
     const response = await fetch("/add_product", {
       credentials: "same-origin",
       method: "POST",
@@ -74,14 +78,16 @@ export default class AddProductForm extends React.Component {
     if (!response.ok) {
       this.setState({
         responseMessage: "Sorry, an error occurred!",
-        responseStatus: "failure"
+        responseStatus: "failure",
+        uploadingProduct: false
       });
       return;
     }
 
     this.setState({
       responseMessage: "Product added successfully",
-      responseStatus: "success"
+      responseStatus: "success",
+      uploadingProduct: false
     });
   };
 
@@ -97,9 +103,11 @@ export default class AddProductForm extends React.Component {
         <div
           className={`add-product-res-msg ${this.state.responseStatus}-response`}
         >
-          {" "}
-          {this.state.responseMessage.length > 0 &&
-            this.state.responseMessage}{" "}
+          {this.state.uploadingProduct ? (
+            <div className="ama-loader"></div>
+          ) : (
+            this.state.responseMessage.length > 0 && this.state.responseMessage
+          )}
         </div>
         <h4 className="ui dividing header product-info">Product Information</h4>
 
@@ -175,7 +183,11 @@ export default class AddProductForm extends React.Component {
         <div className="field">
           <div className="fields">
             <div className="eight wide field">
-              <div className="ui button" onClick={this.submitForm}>
+              <div
+                className={`ui button ${this.state.uploadingProduct &&
+                  "disabled"}`}
+                onClick={this.submitForm}
+              >
                 Submit
               </div>
             </div>
