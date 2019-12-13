@@ -11,12 +11,9 @@ import ProductStore from "../stores/ProductStore";
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      products: [],
-      selectedItem:
-        this.props.categories[0] && this.props.categories[0].products[0].id
-    };
-    this.productStore = new ProductStore();
+    this.productStore = new ProductStore(
+      this.props.categories[0] && this.props.categories[0].products[0].id
+    );
   }
 
   componentDidMount() {
@@ -27,7 +24,7 @@ export default class Home extends React.Component {
 
   onProductClick = productId => {
     this.productStore.fetchProducts(productId);
-    this.setState({ selectedItem: productId });
+    this.productStore.setSelectedItem(productId);
     $("a.browse.item").popup("hide");
     window.scrollTo(0, this.mainSection.productsList.offsetTop);
   };
@@ -40,7 +37,7 @@ export default class Home extends React.Component {
         <Navbar
           productCategories={categories}
           onProductClick={this.onProductClick}
-          selectedId={this.state.selectedItem}
+          selectedId={this.productStore.selectedItem}
         />
         <CenterImage />
         <Main

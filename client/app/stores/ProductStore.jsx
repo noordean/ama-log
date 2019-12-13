@@ -3,6 +3,11 @@ import ReactOnRails from "react-on-rails";
 
 export default class ProductStore {
   @observable products = [];
+  @observable selectedItem = null;
+
+  constructor(selectedItem) {
+    this.setSelectedItem(selectedItem);
+  }
 
   @action
   async fetchProducts(productId) {
@@ -16,5 +21,10 @@ export default class ProductStore {
 
     const responseObj = await response.json();
     this.products = responseObj.products;
+  }
+
+  @action
+  setSelectedItem(productId) {
+    this.selectedItem = productId;
   }
 }

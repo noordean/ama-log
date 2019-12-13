@@ -1,45 +1,28 @@
 import React from "react";
+import { observer } from "mobx-react";
+import { autorun } from "mobx";
 
+import UserStore from "../../stores/UserStore";
+
+@observer
 export default class Login extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      username: "",
-      password: "",
-      errorMessage: ""
-    };
+    this.userStore = new UserStore();
   }
 
-  login = async (event) => {
+  login = event => {
     event.preventDefault();
-    const username = this.state.username;
-    const password = this.state.password;
-    const response = await fetch("/sessions", {
-      credentials: "same-origin",
-      method: "POST",
-      headers: ReactOnRails.authenticityHeaders({
-        "Content-Type": "application/json"
-      }),
-      body: JSON.stringify({
-        username,
-        password
-      })
+    this.userStore.login();
+    autorun(() => {
+      if (this.userStore.isLoggedIn) {
+        window.location = "/admin";
+      }
     });
-
-    if (!response.ok) {
-      const responseObj = await response.json();
-      this.setState({
-        errorMessage: responseObj.message
-      });
-
-      return;
-    }
-
-    window.location = "/admin";
-  }
+  };
 
   setLoginInput = event => {
-    this.state[event.target.name] = event.target.value;
+    this.userStore.setUserValue(event.target.name, event.target.value);
   };
 
   render() {
@@ -47,7 +30,8 @@ export default class Login extends React.Component {
       <div className="login-form">
         <div className="login-error-msg">
           {" "}
-          {this.state.errorMessage.length > 0 && this.state.errorMessage}{" "}
+          {this.userStore.loggedInMessage.length > 0 &&
+            this.userStore.loggedInMessage}{" "}
         </div>
         <form className="ui form">
           <div className="field">
