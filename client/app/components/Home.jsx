@@ -1,10 +1,13 @@
 import React from "react";
+import { observer } from "mobx-react";
 
 import Main from "./Main";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import CenterImage from "./CenterImage";
+import ProductStore from "../stores/ProductStore";
 
+@observer
 export default class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -13,29 +16,17 @@ export default class Home extends React.Component {
       selectedItem:
         this.props.categories[0] && this.props.categories[0].products[0].id
     };
+    this.productStore = new ProductStore();
   }
 
   componentDidMount() {
     if (this.props.categories.length) {
-      this.fetchProducts(this.props.categories[0].products[0].id);
+      this.productStore.fetchProducts(this.props.categories[0].products[0].id);
     }
   }
 
-  fetchProducts = async productId => {
-    const response = await fetch(`/product/${productId}/product_variants`, {
-      credentials: "same-origin",
-      method: "GET",
-      headers: ReactOnRails.authenticityHeaders({
-        "Content-Type": "application/json"
-      })
-    });
-
-    const responseObj = await response.json();
-    this.setState({ products: responseObj.products });
-  };
-
   onProductClick = productId => {
-    this.fetchProducts(productId);
+    this.productStore.fetchProducts(productId);
     this.setState({ selectedItem: productId });
     $("a.browse.item").popup("hide");
     window.scrollTo(0, this.mainSection.productsList.offsetTop);
@@ -53,7 +44,7 @@ export default class Home extends React.Component {
         />
         <CenterImage />
         <Main
-          products={this.state.products}
+          products={this.productStore.products}
           ref={mainSection => (this.mainSection = mainSection)}
         />
         <Footer />
