@@ -1,19 +1,15 @@
 import React from "react";
 import Select from "../Reusable/Select";
+import Modal from "../Reusable/Modal";
 
 export default class AddProductForm extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       categoryName: "",
+      subCategoryName: "",
       productName: "",
-      variantName: "",
-      variantValue: "",
-      price: "",
-      image: null,
-      responseMessage: "",
-      responseStatus: "",
-      uploadingProduct: false
+      image: null
     };
   }
 
@@ -23,8 +19,8 @@ export default class AddProductForm extends React.Component {
     this.setState({ categoryName: value });
   };
 
-  handleProductOnChange = value => {
-    this.setState({ productName: value });
+  subCategoryOnChange = value => {
+    this.setState({ subCategoryName: value });
   };
 
   loadCategoryProducts = async selectedCategory => {
@@ -62,9 +58,6 @@ export default class AddProductForm extends React.Component {
     Object.keys(this.state).forEach(data => {
       fileData.append(data, this.state[data]);
     });
-    this.setState({
-      uploadingProduct: true
-    });
     const response = await fetch("/add_product", {
       credentials: "same-origin",
       method: "POST",
@@ -76,11 +69,6 @@ export default class AddProductForm extends React.Component {
     });
 
     if (!response.ok) {
-      this.setState({
-        responseMessage: "Sorry, an error occurred!",
-        responseStatus: "failure",
-        uploadingProduct: false
-      });
       return;
     }
 
@@ -99,104 +87,57 @@ export default class AddProductForm extends React.Component {
     });
 
     return (
-      <form className="ui form product-form">
-        <div
-          className={`add-product-res-msg ${this.state.responseStatus}-response`}
-        >
-          {this.state.uploadingProduct ? (
-            <div className="ama-loader"></div>
-          ) : (
-            this.state.responseMessage.length > 0 && this.state.responseMessage
-          )}
-        </div>
-        <h4 className="ui dividing header product-info">Product Information</h4>
-
-        <div className="field">
-          <div className="fields">
-            <div className="eight wide field">
-              <label>Product Category</label>
-              <Select
-                options={categoryOptions}
-                placeholder={"Select a category or add a new one"}
-                onChange={this.handleCategoryOnChange}
-              />
-            </div>
-            <div className="eight wide field">
-              <label>Product Name</label>
-              <Select
-                ref={productSelect => (this.productSelect = productSelect)}
-                options={[]}
-                placeholder={"Select a name or add a new one"}
-                onChange={this.handleProductOnChange}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="field">
-          <div className="fields">
-            <div className="eight wide field">
-              <label>Variant Name</label>
-              <input
-                type="text"
-                name="variantName"
-                placeholder="E.g Mouka Flora"
-                onChange={this.setFormInputs}
-              />
-            </div>
-            <div className="eight wide field">
-              <label>Variant Value</label>
-              <input
-                type="text"
-                name="variantValue"
-                placeholder="E.g 6x3.5x8"
-                onChange={this.setFormInputs}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="field">
-          <div className="fields">
-            <div className="eight wide field">
-              <label>Price</label>
-              <input
-                type="number"
-                name="price"
-                placeholder="Enter price"
-                onChange={this.setFormInputs}
-              />
-            </div>
-            <div className="eight wide field">
-              <label>Image</label>
-              <input
-                className="product-img-input"
-                type="file"
-                name="image"
-                placeholder="Select an image"
-                onChange={this.setFormInputs}
-              />
-            </div>
-          </div>
-        </div>
-
-        <div className="field">
-          <div className="fields">
-            <div className="eight wide field">
-              <div
-                className={`ui button ${this.state.uploadingProduct &&
-                  "disabled"}`}
-                onClick={this.submitForm}
-              >
-                Submit
+      <div className="admin-page">
+        <Modal title={"Product Upload"} onSubmit={this.submitForm}>
+          <form className="ui form product-form">
+            <div className="field">
+              <div className="fields">
+                <div className="eight wide field">
+                  <label>Product Category</label>
+                  <Select
+                    options={categoryOptions}
+                    placeholder={"Select a category or add a new one"}
+                    onChange={this.handleCategoryOnChange}
+                  />
+                </div>
+                <div className="eight wide field">
+                  <label>Product Sub-Category</label>
+                  <Select
+                    ref={productSelect => (this.productSelect = productSelect)}
+                    options={[]}
+                    placeholder={"Select a sub-category or add a new one"}
+                    onChange={this.subCategoryOnChange}
+                  />
+                </div>
               </div>
             </div>
-            <div className="eight wide field logout-link">
-              <a href="/logout">Log Out</a>
+
+            <div className="field">
+              <div className="fields">
+                <div className="eight wide field">
+                  <label>Product Name</label>
+                  <input
+                    type="text"
+                    name="productName"
+                    placeholder="E.g Mouka Flora"
+                    onChange={this.setFormInputs}
+                  />
+                </div>
+                <div className="eight wide field">
+                  <label>Image</label>
+                  <input
+                    className="product-img-input"
+                    type="file"
+                    name="image"
+                    placeholder="Select an image"
+                    onChange={this.setFormInputs}
+                  />
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </form>
+          </form>
+        </Modal>
+      </div>
     );
   }
 }

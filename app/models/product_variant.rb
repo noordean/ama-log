@@ -3,7 +3,7 @@ class ProductVariant < ApplicationRecord
 
   attr_writer :uploaded_image
 
-  belongs_to :product
+  belongs_to :products_sub_category
 
   after_create :attach_image!
 
