@@ -7,11 +7,11 @@ class AdminController < ApplicationController
 
   def add_product
     product_category = ProductCategory.find_by(id: params[:categoryName]) || ProductCategory.new(name: params[:categoryName])
-    product = Product.find_by(id: params[:productName]) || Product.new(name: params[:productName])
-    product_variant = ProductVariant.new(name: params[:variantName], value: params[:variantValue], price: params[:price])
-    product_variant.uploaded_image = params[:image]
-    product.product_variants << product_variant
-    product_category.products << product
+    product_sub_category = ProductsSubCategory.find_by(id: params[:subCategoryName]) || ProductsSubCategory.new(name: params[:subCategoryName])
+    product = Product.new(name: params[:productName])
+    product.uploaded_image = params[:image]
+    product_sub_category.products << product
+    product_category.products_sub_categories << products_sub_category
 
     if product_category.save
       head :ok
