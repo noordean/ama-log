@@ -78,6 +78,10 @@ export default class AdminPage extends React.Component {
     $(".product-upload-modal").modal("hide");
   };
 
+  onProductDelete = () => {
+    confirm("Are you sure you want to delete this product?");
+  };
+
   render() {
     const { categories, products } = this.props;
 
@@ -121,7 +125,7 @@ export default class AdminPage extends React.Component {
                     <a>
                       <i className="edit icon"></i>
                     </a>
-                    <a>
+                    <a onClick={this.onProductDelete}>
                       <i className="delete icon"></i>
                     </a>
                   </div>
