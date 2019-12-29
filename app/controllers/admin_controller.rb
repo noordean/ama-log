@@ -11,7 +11,7 @@ class AdminController < ApplicationController
     product = Product.new(name: params[:productName])
     product.uploaded_image = params[:image]
     product_sub_category.products << product
-    product_category.products_sub_categories << products_sub_category
+    product_category.products_sub_categories << product_sub_category
 
     if product_category.save
       head :ok

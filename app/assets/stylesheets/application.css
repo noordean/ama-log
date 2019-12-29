@@ -13,4 +13,5 @@
  *= require selectize
  *= require_tree .
  *= require_self
+ *= require toastr
  */

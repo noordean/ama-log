@@ -69,14 +69,11 @@ export default class AddProductForm extends React.Component {
     });
 
     if (!response.ok) {
+      toastr.error("An error occured. Please try again");
       return;
     }
-
-    this.setState({
-      responseMessage: "Product added successfully",
-      responseStatus: "success",
-      uploadingProduct: false
-    });
+    toastr.success("Product uploaded successfully");
+    $(".product-upload-modal").modal("hide");
   };
 
   render() {
@@ -88,7 +85,11 @@ export default class AddProductForm extends React.Component {
 
     return (
       <div className="admin-page">
-        <Modal title={"Product Upload"} onSubmit={this.submitForm}>
+        <Modal
+          title={"Product Upload"}
+          onSubmit={this.submitForm}
+          modalName={"product-upload-modal"}
+        >
           <form className="ui form product-form">
             <div className="field">
               <div className="fields">

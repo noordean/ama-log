@@ -10,6 +10,7 @@ gem 'pg'
 gem 'dotenv-rails'
 gem 'bcrypt'
 gem 'selectize-rails'
+gem 'toastr-rails'
 gem 'aws-sdk-s3', require: false
 # Use Puma as the app server
 gem 'puma', '~> 3.11'

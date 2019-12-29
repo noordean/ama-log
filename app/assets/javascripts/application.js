@@ -17,3 +17,4 @@
 //= require turbolinks
 //= require selectize
 //= require_tree .
+//= require toastr
