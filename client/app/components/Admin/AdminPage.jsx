@@ -1,8 +1,8 @@
 import React from "react";
-import Select from "../Reusable/Select";
 import Modal from "../Reusable/Modal";
+import ProductUploadForm from "./ProductUploadForm";
 
-export default class AddProductForm extends React.Component {
+export default class AdminPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -40,8 +40,10 @@ export default class AddProductForm extends React.Component {
     const productOptions = products.map(product => {
       return { value: product.id, text: product.name };
     });
-    this.productSelect.selectInput.selectize.clearOptions();
-    this.productSelect.selectInput.selectize.addOption(productOptions);
+    this.productUploadForm.productSelect.selectInput.selectize.clearOptions();
+    this.productUploadForm.productSelect.selectInput.selectize.addOption(
+      productOptions
+    );
   };
 
   setFormInputs = event => {
@@ -90,53 +92,15 @@ export default class AddProductForm extends React.Component {
           onSubmit={this.submitForm}
           modalName={"product-upload-modal"}
         >
-          <form className="ui form product-form">
-            <div className="field">
-              <div className="fields">
-                <div className="eight wide field">
-                  <label>Product Category</label>
-                  <Select
-                    options={categoryOptions}
-                    placeholder={"Select a category or add a new one"}
-                    onChange={this.handleCategoryOnChange}
-                  />
-                </div>
-                <div className="eight wide field">
-                  <label>Product Sub-Category</label>
-                  <Select
-                    ref={productSelect => (this.productSelect = productSelect)}
-                    options={[]}
-                    placeholder={"Select a sub-category or add a new one"}
-                    onChange={this.subCategoryOnChange}
-                  />
-                </div>
-              </div>
-            </div>
-
-            <div className="field">
-              <div className="fields">
-                <div className="eight wide field">
-                  <label>Product Name</label>
-                  <input
-                    type="text"
-                    name="productName"
-                    placeholder="E.g Mouka Flora"
-                    onChange={this.setFormInputs}
-                  />
-                </div>
-                <div className="eight wide field">
-                  <label>Image</label>
-                  <input
-                    className="product-img-input"
-                    type="file"
-                    name="image"
-                    placeholder="Select an image"
-                    onChange={this.setFormInputs}
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
+          <ProductUploadForm
+            ref={productUploadForm =>
+              (this.productUploadForm = productUploadForm)
+            }
+            categoryOptions={categoryOptions}
+            handleCategoryOnChange={this.handleCategoryOnChange}
+            subCategoryOnChange={this.subCategoryOnChange}
+            setFormInputs={this.setFormInputs}
+          />
         </Modal>
       </div>
     );
