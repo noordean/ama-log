@@ -1,0 +1,16 @@
+.admin-products-list {
+  justify-content: space-between;
+  margin-top: 50px !important;
+
+  .product-img {
+    max-height: 210px;
+  }
+
+  .card {
+    width: 265px !important;
+
+    a {
+      cursor: default;
+    }
+  }
+}

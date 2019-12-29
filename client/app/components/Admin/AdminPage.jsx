@@ -79,7 +79,7 @@ export default class AdminPage extends React.Component {
   };
 
   render() {
-    const { categories } = this.props;
+    const { categories, products } = this.props;
 
     const categoryOptions = categories.map(category => {
       return { value: category.id, text: category.name };
@@ -102,6 +102,41 @@ export default class AdminPage extends React.Component {
             setFormInputs={this.setFormInputs}
           />
         </Modal>
+
+        {products.length ? (
+          <div className="admin-products-list ui container link cards">
+            {products.map(product => (
+              <div className="card" key={product.id}>
+                <div className="image">
+                  <img src={product.imageUrl} className="product-img" />
+                </div>
+                <div className="content">
+                  <div className="header">{product.name}</div>
+                  <div className="meta">
+                    <span className="date">{product.value}</span>
+                  </div>
+                </div>
+                <div className="extra content ui grid">
+                  <div className="eight wide column">
+                    <a>
+                      <i className="edit icon"></i>
+                    </a>
+                    <a>
+                      <i className="delete icon"></i>
+                    </a>
+                  </div>
+                  <div className="eight wide column right aligned">
+                    <a>
+                      <i className="add icon"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <h3 className="no-products-text">No products to display</h3>
+        )}
       </div>
     );
   }

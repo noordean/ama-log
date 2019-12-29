@@ -3,6 +3,13 @@ class AdminController < ApplicationController
 
   def index
     @product_categories = ProductCategory.select(:id, :name)
+    @products = Product.all.map do |product|
+      {
+        id: product&.id,
+        name: product&.name,
+        imageUrl: product&.image&.service_url
+      }
+    end
   end
 
   def add_product
