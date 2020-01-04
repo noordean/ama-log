@@ -1,10 +1,3 @@
 $(document).on("turbolinks:load", function() {
-  $("#upload-product-link").click(function() {
-    $(".product-upload-modal")
-      .modal({
-        centered: false,
-        closable: true
-      })
-      .modal("show");
-  });
+  Ama.ModalHandler.initialize("#upload-product-link", ".product-upload-modal");
 });
