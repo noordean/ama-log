@@ -1,8 +1,11 @@
 import React from "react";
+import { observer } from "mobx-react";
 import Modal from "../Reusable/Modal";
 import ProductUploadForm from "./ProductUploadForm";
 import ProductEditForm from "./ProductEditForm";
+import AdminStore from "../../stores/AdminStore";
 
+@observer
 export default class AdminPage extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +15,7 @@ export default class AdminPage extends React.Component {
       productName: "",
       image: null
     };
+    this.adminStore = new AdminStore();
   }
 
   handleCategoryOnChange = value => {
@@ -83,8 +87,13 @@ export default class AdminPage extends React.Component {
     confirm("Are you sure you want to delete this product?");
   };
 
-  openProductEditModal = productId => {
+  openProductEditModal = (productId, productName, productImage) => {
+    this.adminStore.setProductBeingEdited(productId, productName, productImage);
     Ama.ModalHandler.open(".product-edit-modal");
+  };
+
+  onChangeCurrentProductName = event => {
+    this.adminStore.updateCurrentProductName(event.target.value);
   };
 
   render() {
@@ -117,7 +126,11 @@ export default class AdminPage extends React.Component {
           onSubmit={this.submitEditForm}
           modalName={"product-edit-modal"}
         >
-          <ProductEditForm />
+          <ProductEditForm
+            currentProductName={this.adminStore.currentProductName}
+            currentProductImage={this.adminStore.currentProductImage}
+            onChangeCurrentProductName={this.onChangeCurrentProductName}
+          />
         </Modal>
 
         {products.length ? (
@@ -135,7 +148,15 @@ export default class AdminPage extends React.Component {
                 </div>
                 <div className="extra content ui grid">
                   <div className="eight wide column">
-                    <a onClick={() => this.openProductEditModal(product.id)}>
+                    <a
+                      onClick={() =>
+                        this.openProductEditModal(
+                          product.id,
+                          product.name,
+                          product.imageUrl
+                        )
+                      }
+                    >
                       <i className="edit icon"></i>
                     </a>
                     <a onClick={this.onProductDelete}>

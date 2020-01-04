@@ -1,0 +1,20 @@
+.product-form {
+  .product-img-input {
+    padding-top: 7px !important;
+    padding-bottom: 7px !important;
+  }
+
+  .product-image {
+    width: 350px;
+    height: 100px;
+  }
+
+  .close-img-btn {
+    position: absolute;
+    top: 0;
+    font-size: 20px;
+    cursor: pointer;
+    margin-top: -10px;
+    margin-left: -3px;
+  }
+}
