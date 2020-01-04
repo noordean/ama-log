@@ -1,6 +1,11 @@
-.product-upload-modal {
-  .product-form {
+.modal {
+  .modal-content {
     width: 85%;
     margin: 3em auto;
+
+    .product-img-input {
+      padding-top: 7px !important;
+      padding-bottom: 7px !important;
+    }
   }
 }

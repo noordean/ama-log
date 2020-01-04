@@ -1,6 +1,7 @@
 import React from "react";
 import Modal from "../Reusable/Modal";
 import ProductUploadForm from "./ProductUploadForm";
+import ProductEditForm from "./ProductEditForm";
 
 export default class AdminPage extends React.Component {
   constructor(props) {
@@ -82,6 +83,10 @@ export default class AdminPage extends React.Component {
     confirm("Are you sure you want to delete this product?");
   };
 
+  openProductEditModal = productId => {
+    Ama.ModalHandler.open(".product-edit-modal");
+  };
+
   render() {
     const { categories, products } = this.props;
 
@@ -107,6 +112,14 @@ export default class AdminPage extends React.Component {
           />
         </Modal>
 
+        <Modal
+          title={"Edit Product"}
+          onSubmit={this.submitEditForm}
+          modalName={"product-edit-modal"}
+        >
+          <ProductEditForm />
+        </Modal>
+
         {products.length ? (
           <div className="admin-products-list ui container link cards">
             {products.map(product => (
@@ -122,7 +135,7 @@ export default class AdminPage extends React.Component {
                 </div>
                 <div className="extra content ui grid">
                   <div className="eight wide column">
-                    <a>
+                    <a onClick={() => this.openProductEditModal(product.id)}>
                       <i className="edit icon"></i>
                     </a>
                     <a onClick={this.onProductDelete}>

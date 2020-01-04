@@ -7,7 +7,7 @@ export default class Modal extends React.Component {
       <div className={`ui modal ${modalName}`}>
         <i className="close icon"></i>
         <div className="header">{title}</div>
-        <div className="">{children}</div>
+        <div className="modal-content">{children}</div>
         <div className="actions">
           <div className="ui button" onClick={onSubmit}>
             Submit
