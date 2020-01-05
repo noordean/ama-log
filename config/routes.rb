@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   root 'home#index'
   resources :sessions, only: %i[ create ]
   resources :admin, only: %i[ index ]
+  resources :products, only: %i[ update ]
 
   get 'login', to: 'sessions#new', as: 'login'
   get 'logout', to: 'sessions#destroy'

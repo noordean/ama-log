@@ -18,6 +18,10 @@ export default class AdminPage extends React.Component {
     this.adminStore = new AdminStore();
   }
 
+  componentDidMount() {
+    this.adminStore.updateProducts(this.props.products);
+  }
+
   handleCategoryOnChange = value => {
     // fakeId handles when the input is cleared
     this.loadCategoryProducts(value || "fakeId");
@@ -87,13 +91,36 @@ export default class AdminPage extends React.Component {
     confirm("Are you sure you want to delete this product?");
   };
 
-  openProductEditModal = (productId, productName, productImage) => {
-    this.adminStore.setProductBeingEdited(productId, productName, productImage);
+  openProductEditModal = (productId, productName) => {
+    this.adminStore.setProductBeingEdited(productId, productName);
     Ama.ModalHandler.open(".product-edit-modal");
   };
 
   onChangeCurrentProductName = event => {
     this.adminStore.updateCurrentProductName(event.target.value);
+  };
+
+  submitEditForm = async () => {
+    const name = this.adminStore.currentProductName;
+    const response = await fetch(
+      `/products/${this.adminStore.currentProductId}`,
+      {
+        credentials: "same-origin",
+        method: "PUT",
+        headers: ReactOnRails.authenticityHeaders({
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({ name })
+      }
+    );
+
+    if (!response.ok) {
+      toastr.error("An error occured. Please try again");
+      return;
+    }
+    toastr.success("Product name has been updated");
+    this.adminStore.updateProductonEdit();
+    $(".product-edit-modal").modal("hide");
   };
 
   render() {
@@ -133,9 +160,9 @@ export default class AdminPage extends React.Component {
           />
         </Modal>
 
-        {products.length ? (
+        {this.adminStore.products.length ? (
           <div className="admin-products-list ui container link cards">
-            {products.map(product => (
+            {this.adminStore.products.map(product => (
               <div className="card" key={product.id}>
                 <div className="image">
                   <img src={product.imageUrl} className="product-img" />
@@ -150,11 +177,7 @@ export default class AdminPage extends React.Component {
                   <div className="eight wide column">
                     <a
                       onClick={() =>
-                        this.openProductEditModal(
-                          product.id,
-                          product.name,
-                          product.imageUrl
-                        )
+                        this.openProductEditModal(product.id, product.name)
                       }
                     >
                       <i className="edit icon"></i>

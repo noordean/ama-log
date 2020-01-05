@@ -3,17 +3,29 @@ import { observable, action } from "mobx";
 export default class AdminStore {
   @observable currentProductId = null;
   @observable currentProductName = "";
-  @observable currentProductImage = "";
+  @observable products = [];
 
   @action
-  setProductBeingEdited(id, name, image) {
+  setProductBeingEdited(id, name) {
     this.currentProductId = id;
     this.currentProductName = name;
-    this.currentProductImage = image;
   }
 
   @action
   updateCurrentProductName(name) {
     this.currentProductName = name;
+  }
+
+  @action
+  updateProducts(products) {
+    this.products = products;
+  }
+
+  @action
+  updateProductonEdit() {
+    const productIndex = this.products.findIndex(
+      p => p.id === this.currentProductId
+    );
+    this.products[productIndex].name = this.currentProductName;
   }
 }

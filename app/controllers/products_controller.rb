@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  before_action :load_product, only: %i[ update ]
+
   def product_variants
     product_variants = Product.find(params[:id]).product_variants.map do |variant|
       {
@@ -10,5 +12,19 @@ class ProductsController < ApplicationController
       }
     end
     render json: { products: product_variants }
+  end
+
+  def update
+    if @product.update(name: params[:name])
+      head :ok
+    else
+      head :unprocessable_entity
+    end
+  end
+
+  private
+
+  def load_product
+    @product = Product.find(params[:id])
   end
 end
