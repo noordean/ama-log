@@ -20,7 +20,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :products, only: %i[ update ] do
+  resources :products, only: %i[ update destroy ] do
     member do
       post "add_variant"
       get "product_variants"

@@ -94,8 +94,10 @@ export default class AdminPage extends React.Component {
     $(".product-upload-modal").modal("hide");
   };
 
-  onProductDelete = () => {
-    confirm("Are you sure you want to delete this product?");
+  onProductDelete = productId => {
+    if (confirm("Are you sure you want to delete this product?")) {
+      this.adminStore.deleteProduct(productId);
+    }
   };
 
   openProductAddModal = (productId, productName) => {
@@ -182,7 +184,7 @@ export default class AdminPage extends React.Component {
         </Modal>
 
         <Modal
-          title={`Add a new product to ${this.adminStore.currentProductName}`}
+          title={`Add a new variant to ${this.adminStore.currentProductName}`}
           onSubmit={this.submitAddProductForm}
           modalName={"add-new-product-modal"}
         >
@@ -211,7 +213,7 @@ export default class AdminPage extends React.Component {
                     >
                       <i className="edit icon"></i>
                     </a>
-                    <a onClick={this.onProductDelete}>
+                    <a onClick={() => this.onProductDelete(product.id)}>
                       <i className="delete icon"></i>
                     </a>
                   </div>

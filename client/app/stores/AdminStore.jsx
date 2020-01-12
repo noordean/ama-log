@@ -29,6 +29,14 @@ export default class AdminStore {
     this.products[productIndex].name = this.currentProductName;
   }
 
+  @action
+  updateProductsOnDelete(productId) {
+    const filteredProducts = this.products.filter(
+      product => product.id !== productId
+    );
+    this.products = filteredProducts;
+  }
+
   async submitAddProductForm(name, value, price) {
     const response = await fetch(
       `/products/${this.currentProductId}/add_variant`,
@@ -48,5 +56,22 @@ export default class AdminStore {
     }
     toastr.success("Variant added successfully");
     $(".add-new-product-modal").modal("hide");
+  }
+
+  async deleteProduct(productId) {
+    const response = await fetch(`/products/${productId}`, {
+      credentials: "same-origin",
+      method: "DELETE",
+      headers: ReactOnRails.authenticityHeaders({
+        "Content-Type": "application/json"
+      })
+    });
+
+    if (!response.ok) {
+      toastr.error("An error occured. Please try again");
+      return;
+    }
+    this.updateProductsOnDelete(productId);
+    toastr.success("Product successfully deleted");
   }
 }

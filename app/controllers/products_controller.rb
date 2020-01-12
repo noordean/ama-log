@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :load_product, only: %i[ update add_variant ]
+  before_action :load_product, only: %i[ update add_variant destroy ]
 
   def product_variants
     product_variants = Product.find(params[:id]).product_variants.map do |variant|
@@ -25,6 +25,15 @@ class ProductsController < ApplicationController
   def add_variant
     variant = @product.product_variants.create(name: params[:name], value: params[:value], price: params[:price])
     if variant.persisted?
+      head :ok
+    else
+      head :unprocessable_entity
+    end
+  end
+
+  def destroy
+    product = @product.destroy
+    if product.destroyed?
       head :ok
     else
       head :unprocessable_entity
