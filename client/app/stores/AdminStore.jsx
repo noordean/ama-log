@@ -6,7 +6,7 @@ export default class AdminStore {
   @observable products = [];
 
   @action
-  setProductBeingEdited(id, name) {
+  setCurrentProduct(id, name) {
     this.currentProductId = id;
     this.currentProductName = name;
   }
@@ -27,5 +27,26 @@ export default class AdminStore {
       p => p.id === this.currentProductId
     );
     this.products[productIndex].name = this.currentProductName;
+  }
+
+  async submitAddProductForm(name, value, price) {
+    const response = await fetch(
+      `/products/${this.currentProductId}/add_variant`,
+      {
+        credentials: "same-origin",
+        method: "POST",
+        headers: ReactOnRails.authenticityHeaders({
+          "Content-Type": "application/json"
+        }),
+        body: JSON.stringify({ name, value, price })
+      }
+    );
+
+    if (!response.ok) {
+      toastr.error("An error occured. Please try again");
+      return;
+    }
+    toastr.success("Variant added successfully");
+    $(".add-new-product-modal").modal("hide");
   }
 }

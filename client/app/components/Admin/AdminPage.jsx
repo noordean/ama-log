@@ -3,6 +3,7 @@ import { observer } from "mobx-react";
 import Modal from "../Reusable/Modal";
 import ProductUploadForm from "./ProductUploadForm";
 import ProductEditForm from "./ProductEditForm";
+import AddProductForm from "./AddProductForm";
 import AdminStore from "../../stores/AdminStore";
 
 @observer
@@ -13,7 +14,10 @@ export default class AdminPage extends React.Component {
       categoryName: "",
       subCategoryName: "",
       productName: "",
-      image: null
+      image: null,
+      variantName: "",
+      variantValue: "",
+      variantPrice: ""
     };
     this.adminStore = new AdminStore();
   }
@@ -33,13 +37,16 @@ export default class AdminPage extends React.Component {
   };
 
   loadCategoryProducts = async selectedCategory => {
-    const response = await fetch(`/category/${selectedCategory}/products`, {
-      credentials: "same-origin",
-      method: "GET",
-      headers: ReactOnRails.authenticityHeaders({
-        "Content-Type": "application/json"
-      })
-    });
+    const response = await fetch(
+      `/product_categories/${selectedCategory}/products`,
+      {
+        credentials: "same-origin",
+        method: "GET",
+        headers: ReactOnRails.authenticityHeaders({
+          "Content-Type": "application/json"
+        })
+      }
+    );
 
     const responseObj = await response.json();
     this.updateProductOptions(responseObj.products);
@@ -91,8 +98,13 @@ export default class AdminPage extends React.Component {
     confirm("Are you sure you want to delete this product?");
   };
 
+  openProductAddModal = (productId, productName) => {
+    this.adminStore.setCurrentProduct(productId, productName);
+    Ama.ModalHandler.open(".add-new-product-modal");
+  };
+
   openProductEditModal = (productId, productName) => {
-    this.adminStore.setProductBeingEdited(productId, productName);
+    this.adminStore.setCurrentProduct(productId, productName);
     Ama.ModalHandler.open(".product-edit-modal");
   };
 
@@ -123,8 +135,17 @@ export default class AdminPage extends React.Component {
     $(".product-edit-modal").modal("hide");
   };
 
+  submitAddProductForm = () => {
+    const { variantName, variantValue, variantPrice } = this.state;
+    this.adminStore.submitAddProductForm(
+      variantName,
+      variantValue,
+      variantPrice
+    );
+  };
+
   render() {
-    const { categories, products } = this.props;
+    const { categories } = this.props;
 
     const categoryOptions = categories.map(category => {
       return { value: category.id, text: category.name };
@@ -160,6 +181,14 @@ export default class AdminPage extends React.Component {
           />
         </Modal>
 
+        <Modal
+          title={`Add a new product to ${this.adminStore.currentProductName}`}
+          onSubmit={this.submitAddProductForm}
+          modalName={"add-new-product-modal"}
+        >
+          <AddProductForm setFormInputs={this.setFormInputs} />
+        </Modal>
+
         {this.adminStore.products.length ? (
           <div className="admin-products-list ui container link cards">
             {this.adminStore.products.map(product => (
@@ -187,7 +216,11 @@ export default class AdminPage extends React.Component {
                     </a>
                   </div>
                   <div className="eight wide column right aligned">
-                    <a>
+                    <a
+                      onClick={() =>
+                        this.openProductAddModal(product.id, product.name)
+                      }
+                    >
                       <i className="add icon"></i>
                     </a>
                   </div>

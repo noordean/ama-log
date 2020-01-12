@@ -1,3 +1,5 @@
 class ProductVariant < ApplicationRecord
-  belongs_to :products_sub_category
+  belongs_to :product
+
+  validates :name, :value, :price, presence: true
 end
