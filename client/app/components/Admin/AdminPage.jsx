@@ -76,7 +76,7 @@ export default class AdminPage extends React.Component {
     Object.keys(this.state).forEach(data => {
       fileData.append(data, this.state[data]);
     });
-    const response = await fetch("/add_product", {
+    const response = await fetch("/admin/add_product", {
       credentials: "same-origin",
       method: "POST",
       headers: {
