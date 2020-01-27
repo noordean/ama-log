@@ -104,6 +104,13 @@ export default class AdminPage extends React.Component {
     }
   };
 
+  onVariantDelete = (event, variantId) => {
+    event.stopPropagation();
+    if (confirm("Are you sure you want to delete this variant?")) {
+      this.productStore.deleteVariant(variantId);
+    }
+  };
+
   openProductAddModal = (event, productId, productName) => {
     event.stopPropagation();
     this.adminStore.setCurrentProduct(productId, productName);
@@ -207,7 +214,10 @@ export default class AdminPage extends React.Component {
           title={`Variants list for ${this.adminStore.currentProductName}`}
           modalName={"product-variants-list-modal"}
         >
-          <ProductVariantsList variants={this.productStore.productVariants} />
+          <ProductVariantsList
+            variants={this.productStore.productVariants}
+            onVariantDelete={this.onVariantDelete}
+          />
         </Modal>
         {this.adminStore.products.length ? (
           <div className="admin-products-list ui container link cards">

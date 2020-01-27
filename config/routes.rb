@@ -26,4 +26,6 @@ Rails.application.routes.draw do
       get "product_variants"
     end
   end
+
+  resources :product_variants, only: %i[ destroy ]
 end
