@@ -12,6 +12,7 @@
     <div class="eight wide column right aligned support">
       <% if current_user %>
          <a id="upload-product-link" class="upload-product-link">Upload Product</a>
+         <%= link_to "Log Out", logout_path, class: "ui red label" %>
       <% else %>
         <div>Customer Support</div>
         <div><a href="https://api.whatsapp.com/send?text=Hello%20AMA%20mart..." target="_blank"><i class="whatsapp icon"></i>07031863004</a></div>
