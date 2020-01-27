@@ -2,7 +2,7 @@ import { observable, action } from "mobx";
 import ReactOnRails from "react-on-rails";
 
 export default class ProductStore {
-  @observable products = [];
+  @observable productVariants = [];
   @observable selectedItem = null;
 
   constructor(selectedItem) {
@@ -10,8 +10,8 @@ export default class ProductStore {
   }
 
   @action
-  async fetchProducts(productId) {
-    const response = await fetch(`/product/${productId}/product_variants`, {
+  async fetchProductVariants(productId) {
+    const response = await fetch(`/products/${productId}/product_variants`, {
       credentials: "same-origin",
       method: "GET",
       headers: ReactOnRails.authenticityHeaders({
@@ -20,7 +20,7 @@ export default class ProductStore {
     });
 
     const responseObj = await response.json();
-    this.products = responseObj.products;
+    this.productVariants = responseObj.variants;
   }
 
   @action

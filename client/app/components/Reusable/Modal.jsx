@@ -9,9 +9,11 @@ export default class Modal extends React.Component {
         <div className="header">{title}</div>
         <div className="modal-content">{children}</div>
         <div className="actions">
-          <div className="ui button" onClick={onSubmit}>
-            Submit
-          </div>
+          {onSubmit && (
+            <div className="ui button" onClick={onSubmit}>
+              Submit
+            </div>
+          )}
         </div>
       </div>
     );

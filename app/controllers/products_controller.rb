@@ -8,10 +8,9 @@ class ProductsController < ApplicationController
         name: variant&.name,
         value: variant&.value,
         price: variant&.price,
-        imageUrl: variant&.image&.service_url
       }
     end
-    render json: { products: product_variants }
+    render json: { variants: product_variants }
   end
 
   def update

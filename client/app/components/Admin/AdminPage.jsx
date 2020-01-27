@@ -4,7 +4,9 @@ import Modal from "../Reusable/Modal";
 import ProductUploadForm from "./ProductUploadForm";
 import ProductEditForm from "./ProductEditForm";
 import AddProductForm from "./AddProductForm";
+import ProductVariantsList from "./ProductVariantsList";
 import AdminStore from "../../stores/AdminStore";
+import ProductStore from "../../stores/ProductStore";
 
 @observer
 export default class AdminPage extends React.Component {
@@ -20,6 +22,7 @@ export default class AdminPage extends React.Component {
       variantPrice: ""
     };
     this.adminStore = new AdminStore();
+    this.productStore = new ProductStore();
   }
 
   componentDidMount() {
@@ -94,20 +97,29 @@ export default class AdminPage extends React.Component {
     $(".product-upload-modal").modal("hide");
   };
 
-  onProductDelete = productId => {
+  onProductDelete = (event, productId) => {
+    event.stopPropagation();
     if (confirm("Are you sure you want to delete this product?")) {
       this.adminStore.deleteProduct(productId);
     }
   };
 
-  openProductAddModal = (productId, productName) => {
+  openProductAddModal = (event, productId, productName) => {
+    event.stopPropagation();
     this.adminStore.setCurrentProduct(productId, productName);
     Ama.ModalHandler.open(".add-new-product-modal");
   };
 
-  openProductEditModal = (productId, productName) => {
+  openProductEditModal = (event, productId, productName) => {
+    event.stopPropagation();
     this.adminStore.setCurrentProduct(productId, productName);
     Ama.ModalHandler.open(".product-edit-modal");
+  };
+
+  openVariantsListModal = (productId, productName) => {
+    this.productStore.fetchProductVariants(productId);
+    this.adminStore.setCurrentProduct(productId, productName);
+    Ama.ModalHandler.open(".product-variants-list-modal");
   };
 
   onChangeCurrentProductName = event => {
@@ -191,10 +203,22 @@ export default class AdminPage extends React.Component {
           <AddProductForm setFormInputs={this.setFormInputs} />
         </Modal>
 
+        <Modal
+          title={`Variants list for ${this.adminStore.currentProductName}`}
+          modalName={"product-variants-list-modal"}
+        >
+          <ProductVariantsList variants={this.productStore.productVariants} />
+        </Modal>
         {this.adminStore.products.length ? (
           <div className="admin-products-list ui container link cards">
             {this.adminStore.products.map(product => (
-              <div className="card" key={product.id}>
+              <div
+                className="card"
+                key={product.id}
+                onClick={() =>
+                  this.openVariantsListModal(product.id, product.name)
+                }
+              >
                 <div className="image">
                   <img src={product.imageUrl} className="product-img" />
                 </div>
@@ -213,14 +237,20 @@ export default class AdminPage extends React.Component {
                     >
                       <i className="edit icon"></i>
                     </a>
-                    <a onClick={() => this.onProductDelete(product.id)}>
+                    <a
+                      onClick={event => this.onProductDelete(event, product.id)}
+                    >
                       <i className="delete icon"></i>
                     </a>
                   </div>
                   <div className="eight wide column right aligned">
                     <a
-                      onClick={() =>
-                        this.openProductAddModal(product.id, product.name)
+                      onClick={event =>
+                        this.openProductAddModal(
+                          event,
+                          product.id,
+                          product.name
+                        )
                       }
                     >
                       <i className="add icon"></i>
