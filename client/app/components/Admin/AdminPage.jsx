@@ -95,6 +95,7 @@ export default class AdminPage extends React.Component {
     }
     toastr.success("Product uploaded successfully");
     $(".product-upload-modal").modal("hide");
+    this.adminStore.reFetchProducts();
   };
 
   onProductDelete = (event, productId) => {
@@ -241,8 +242,12 @@ export default class AdminPage extends React.Component {
                 <div className="extra content ui grid">
                   <div className="eight wide column">
                     <a
-                      onClick={() =>
-                        this.openProductEditModal(product.id, product.name)
+                      onClick={event =>
+                        this.openProductEditModal(
+                          event,
+                          product.id,
+                          product.name
+                        )
                       }
                     >
                       <i className="edit icon"></i>

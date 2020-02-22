@@ -74,4 +74,21 @@ export default class AdminStore {
     this.updateProductsOnDelete(productId);
     toastr.success("Product successfully deleted");
   }
+
+  async reFetchProducts() {
+    const response = await fetch("/admin.json", {
+      credentials: "same-origin",
+      method: "GET",
+      headers: ReactOnRails.authenticityHeaders({
+        "Content-Type": "application/json"
+      })
+    });
+
+    if (!response.ok) {
+      toastr.error("An error occured. Please try again");
+      return;
+    }
+    const products = await response.json();
+    this.updateProducts(products);
+  }
 }

@@ -2,13 +2,20 @@ class AdminController < ApplicationController
   before_action :require_access!
 
   def index
-    @product_categories = ProductCategory.select(:id, :name)
     @products = Product.order(:name).map do |product|
       {
         id: product&.id,
         name: product&.name,
         imageUrl: product&.image&.service_url
       }
+    end
+    respond_to do |format|
+      format.html do
+        @product_categories = ProductCategory.select(:id, :name)
+      end
+      format.json do
+        render json: @products
+      end
     end
   end
 
