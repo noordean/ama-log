@@ -5,7 +5,7 @@ class HomeController < ApplicationController
     @category_and_products = ProductCategory.all.map do |category|
       {
         category: category,
-        products: category.products.select(:id, :name)
+        products: category.products_sub_categories.select(:id, :name)
       }
     end
   end

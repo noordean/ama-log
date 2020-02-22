@@ -14,6 +14,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :products_sub_categories, only: [] do
+    member do
+      get "products"
+    end
+  end
+
   resources :admin, only: %i[ index ] do
     collection do
       post "add_product"

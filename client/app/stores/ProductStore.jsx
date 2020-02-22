@@ -3,6 +3,7 @@ import ReactOnRails from "react-on-rails";
 
 export default class ProductStore {
   @observable productVariants = [];
+  @observable products = [];
   @observable selectedItem = null;
 
   constructor(selectedItem) {
@@ -21,6 +22,23 @@ export default class ProductStore {
 
     const responseObj = await response.json();
     this.productVariants = responseObj.variants;
+  }
+
+  @action
+  async fetchProducts(subCategoryId) {
+    const response = await fetch(
+      `/products_sub_categories/${subCategoryId}/products`,
+      {
+        credentials: "same-origin",
+        method: "GET",
+        headers: ReactOnRails.authenticityHeaders({
+          "Content-Type": "application/json"
+        })
+      }
+    );
+
+    const responseObj = await response.json();
+    this.products = responseObj.products;
   }
 
   @action
